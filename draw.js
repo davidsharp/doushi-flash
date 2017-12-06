@@ -7,7 +7,7 @@ registerFont('./font.otf', {family: 'Noto Sans'});
 
 const drawPlz = (text,colour,width,height) =>{
 const margin = 10;
-const img = {width:width||100,height:height||100}
+const img = {width:width||300,height:height||300}
 
   var canvas = /*new */Canvas(img.width+2, img.height+2);
   var ctx = canvas.getContext('2d');
@@ -18,7 +18,7 @@ const img = {width:width||100,height:height||100}
   ctx.fillStyle=g;
   ctx.fillRect(0, 0, img.width, img.height);
   
-  ctx.font = '48px "Noto Sans"';
+  ctx.font = '36px "Noto Sans"';
   ctx.fillStyle = "black";
   ctx.strokeStyle = "white";
   ctx.strokeWidth = "2px";

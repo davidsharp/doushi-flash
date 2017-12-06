@@ -15,7 +15,14 @@ app.use(cookieParser());
 app.use(getSettings);
 
 app.get('/', (req, res) => {
-  let i = drawPlz().toBuffer()
+  const { plain, kana, meaning, masu, te } = pick(verbs);
+  
+  let i = drawPlz(
+    `${plain} (${kana})`+'\n'+
+    `${meaning}`+'\n'+
+    `${masu.kana}`+'\n'+
+    `${te.kana}`
+  ).toBuffer()
   res.writeHead(200, {
      'Content-Type': 'image/png',
      'Content-Length': i.length
