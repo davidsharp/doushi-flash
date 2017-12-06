@@ -1,0 +1,24 @@
+{
+  "name": "japanese-verb-conjugations",
+  "version": "0.0.1",
+  "description": "Practice Japanese verb conjugations.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.15.3",
+    "hbs": "^4.0.1",
+    "cookie-parser": "^1.4.3",
+    "canvas": "Automattic/node-canvas#d1bb195528cbbb8c46744bf14a11324e28882186"
+  },
+  "engines": {
+    "node": "8.1.x"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}
