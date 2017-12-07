@@ -40,7 +40,7 @@ app.get('/v/:verb', (req, res) => {
                    c.masu.kanji==req.params.verb ||
                    c.te.kana==req.params.verb ||
                    c.te.kanji==req.params.verb
-                  )) || 'verb not found' //redirect!
+                  )) || {plain:`${req.params.verb} not found`,kana:'sorry',meaning:'supports plain, english, masu and te',masu:{kana:'try again? 🙈'},te:{kana:'❤️ david'}} //redirect!
   const { plain, kana, meaning, masu, te } = verb;
   let i = drawPlz([
     `${plain} (${kana})`,
