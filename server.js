@@ -1,18 +1,18 @@
 /**/'use strict';
 
 const express = require('express');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const { verbs, conjugations } = require('./lib/verbs');
-const getSettings = require('./middleware/get-settings');
+//const getSettings = require('./middleware/get-settings');
 const pick = require('./lib/pick');
 const app = express();
 
 var drawPlz = require('./draw')
 
-app.set('view engine', 'hbs');
+//app.set('view engine', 'hbs');
 app.use(express.static('public'));
-app.use(cookieParser());
-app.use(getSettings);
+//app.use(cookieParser());
+//app.use(getSettings);
 
 app.get('/', (req, res) => {
   const { plain, kana, meaning, masu, te } = pick(verbs);

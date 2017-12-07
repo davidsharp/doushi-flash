@@ -10,7 +10,7 @@ const drawPlz = (text='こんにちは',colour,width,height) =>{
   const margin = 10;
   const img = {width:width||300,height:height||300}
 
-  var canvas = /*new */Canvas(img.width+2, img.height+2);
+  var canvas = /*new */Canvas(img.width, img.height);
   var ctx = canvas.getContext('2d');
 
   var g=ctx.createLinearGradient(img.width-10,0,0,img.height-10);
@@ -25,29 +25,7 @@ const drawPlz = (text='こんにちは',colour,width,height) =>{
   ctx.strokeWidth = "2px";
   ctx.fillText(textToPrint, 10, 50,100);
   
-  /*
-  const { registerFont, createCanvas } = require('canvas');
-  registerFont('comicsans.ttf', {family: 'Comic Sans'});
-
-var canvas = createCanvas(500, 500),
-  ctx = canvas.getContext('2d');
-
-ctx.font = '12px "Comic Sans"';
-ctx.fillText(250, 10, 'Everyone hates this font :(');
-  */
-  
-  // Create a circle
-  //ctx.beginPath();
-  //ctx.arc(img.width/2, img.height/2, (img.height/2)-10, 0, Math.PI * 2, true);
-
-  // Clip to the current path
-  //ctx.clip();
-
-  //ctx.drawImage(img, 0, 0, img.width, img.height);
-  
   return canvas
 }
 
-//export default drawPlz
-//export { drawPlz }
 module.exports=drawPlz
