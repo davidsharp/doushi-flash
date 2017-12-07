@@ -5,9 +5,10 @@ const registerFont = require('canvas').registerFont
 
 registerFont('./font.otf', {family: 'Noto Sans'});
 
-const drawPlz = (text,colour,width,height) =>{
-const margin = 10;
-const img = {width:width||300,height:height||300}
+const drawPlz = (text='こんにちは',colour,width,height) =>{
+  const textToPrint = Array.isArray(text)?text.join('\n'):text
+  const margin = 10;
+  const img = {width:width||300,height:height||300}
 
   var canvas = /*new */Canvas(img.width+2, img.height+2);
   var ctx = canvas.getContext('2d');
@@ -22,7 +23,7 @@ const img = {width:width||300,height:height||300}
   ctx.fillStyle = "black";
   ctx.strokeStyle = "white";
   ctx.strokeWidth = "2px";
-  ctx.fillText(text||'こんいちは', 10, 50,100);
+  ctx.fillText(textToPrint, 10, 50,100);
   
   /*
   const { registerFont, createCanvas } = require('canvas');

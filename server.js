@@ -17,12 +17,12 @@ app.use(getSettings);
 app.get('/', (req, res) => {
   const { plain, kana, meaning, masu, te } = pick(verbs);
   
-  let i = drawPlz(
-    `${plain} (${kana})`+'\n'+
-    `${meaning}`+'\n'+
-    `${masu.kana}`+'\n'+
+  let i = drawPlz([
+    `${plain} (${kana})`,
+    `${meaning}`,
+    `${masu.kana}`,
     `${te.kana}`
-  ).toBuffer()
+  ]).toBuffer()
   res.writeHead(200, {
      'Content-Type': 'image/png',
      'Content-Length': i.length
@@ -30,8 +30,24 @@ app.get('/', (req, res) => {
   res.end( i );
 });
 
-app.get('/fromverb/:verb', (req, res) => {
-  let i = drawPlz(req.params.verb+'いきます').toBuffer()
+app.get('/v/:verb', (req, res) => {
+  const verb =
+        verbs.find(c=>(
+                   c.kana==req.params.verb ||
+                   c.kanji==req.params.verb ||
+                   c.meaning.split(' ')[1]==req.params.verb ||
+                   c.masu.kana==req.params.verb ||
+                   c.masu.kanji==req.params.verb ||
+                   c.te.kana==req.params.verb ||
+                   c.te.kanji==req.params.verb
+                  )) || 'verb not found' //redirect!
+  const { plain, kana, meaning, masu, te } = verb;
+  let i = drawPlz([
+    `${plain} (${kana})`,
+    `${meaning}`,
+    `${masu.kana}`,
+    `${te.kana}`
+  ]).toBuffer()
   res.writeHead(200, {
      'Content-Type': 'image/png',
      'Content-Length': i.length
