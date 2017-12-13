@@ -22,7 +22,7 @@ const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   var ctx = canvas.getContext('2d');
   
   const textWidth = ctx.measureText(textToPrint).width
-  const textHeight = ctx.measureText(SPACER).width
+  const textHeight = 36 //we're using 36 below //ctx.measureText(SPACER).width
 
   var g=ctx.createLinearGradient(img.width-10,0,0,img.height-10);
   g.addColorStop(0,"#dddd44");
@@ -30,13 +30,13 @@ const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   ctx.fillStyle=g;
   ctx.fillRect(0, 0, img.width, img.height);
   
-  ctx.font = '36px "Noto Sans"';
+  ctx.font = `${textHeight}px "Noto Sans"`;
   ctx.fillStyle = "black";
   ctx.strokeStyle = "white";
   ctx.strokeWidth = "2px";
   ctx.textAlign = "center";
   textToPrint.split('\n').forEach((l,i)=>
-    ctx.fillText(l, /*10, 50,*/(width/2)/*-(textWidth/2)+margin*/,50+(i*textHeight*5)+margin, width-margin)//100);
+    ctx.fillText(l.trim(), /*10, 50,*/(width/2)/*-(textWidth/2)+margin*/,50+(i*36)+(i*margin*2), width-margin)//100);
   )
   console.log(ctx.measureText(textToPrint).width)
   console.log(ctx.measureText(SPACER).width)
