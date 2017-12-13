@@ -55,6 +55,25 @@ app.get('/v/:verb', (req, res) => {
   res.end( i );
 });
 
+app.get('/:width/:height', (req, res) => {
+  const { plain, kana, meaning, masu, te } = pick(verbs);
+  //const { width, height } = req.params
+  const width = parseInt(req.params.width)
+  const height = parseInt(req.params.height)
+  
+  let i = drawPlz([
+    `${plain} (${kana})`,
+    `${meaning}`,
+    `${masu.kana}`,
+    `${te.kana}`
+  ],{width,height}).toBuffer()
+  res.writeHead(200, {
+     'Content-Type': 'image/png',
+     'Content-Length': i.length
+   });
+  res.end( i );
+});
+
 app.get('/oldindex', (req, res) => {
   res.render('index', {
     conjugations: conjugations.map(c => {
