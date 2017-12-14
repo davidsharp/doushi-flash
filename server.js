@@ -14,6 +14,8 @@ app.use(express.static('public'));
 //app.use(cookieParser());
 //app.use(getSettings);
 
+// random verb
+
 app.get('/', (req, res) => {
   const { plain, kana, meaning, masu, te } = pick(verbs);
   
@@ -29,6 +31,27 @@ app.get('/', (req, res) => {
    });
   res.end( i );
 });
+
+app.get('/:width/:height', (req, res) => {
+  const { plain, kana, meaning, masu, te } = pick(verbs);
+  //const { width, height } = req.params
+  const width = parseInt(req.params.width)
+  const height = parseInt(req.params.height)
+  
+  let i = drawPlz([
+    `${plain} (${kana})`,
+    `${meaning}`,
+    `${masu.kana}`,
+    `${te.kana}`
+  ],{width,height}).toBuffer()
+  res.writeHead(200, {
+     'Content-Type': 'image/png',
+     'Content-Length': i.length
+   });
+  res.end( i );
+});
+
+// specify verb
 
 app.get('/v/:verb', (req, res) => {
   const verb =
@@ -55,17 +78,25 @@ app.get('/v/:verb', (req, res) => {
   res.end( i );
 });
 
-app.get('/:width/:height', (req, res) => {
-  const { plain, kana, meaning, masu, te } = pick(verbs);
-  //const { width, height } = req.params
+// custom write
+
+app.get('/w/:write', (req, res) => {
+  let i = drawPlz([
+    req.params.write
+  ]).toBuffer()
+  res.writeHead(200, {
+     'Content-Type': 'image/png',
+     'Content-Length': i.length
+   });
+  res.end( i );
+});
+
+app.get('/w/:write/:width/:height', (req, res) => {
   const width = parseInt(req.params.width)
   const height = parseInt(req.params.height)
   
   let i = drawPlz([
-    `${plain} (${kana})`,
-    `${meaning}`,
-    `${masu.kana}`,
-    `${te.kana}`
+    req.params.write
   ],{width,height}).toBuffer()
   res.writeHead(200, {
      'Content-Type': 'image/png',

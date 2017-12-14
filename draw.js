@@ -6,6 +6,9 @@ const UPPER_LIMIT = 2000
 const DEFAULT_SIZE = 500
 
 registerFont('./font.otf', {family: 'Noto Sans'});
+registerFont('./font-bals.ttf', {family: 'Balsamiq Sans'});
+
+
 
 const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   const textToPrint = Array.isArray(text)?text.join('\n'):text
@@ -30,11 +33,13 @@ const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   ctx.fillRect(0, 0, img.width, img.height);
   
   ctx.font = `${textHeight}px "Noto Sans"`;
-  ctx.fillStyle = "white";
-  ctx.strokeStyle = "black";
-  //ctx.lineWidth = "10px";
+  ctx.fillStyle = "#EEE";
+  ctx.strokeStyle = "#444";
+  ctx.lineWidth = 4;
+  ctx.lineJoin = "round";
   ctx.textAlign = "center";
   textToPrint.split('\n').forEach((l,i)=>{
+    ctx.font = `${textHeight}px "${/[a-zA-Z]/.test(l)?'Balsamiq':'Noto'} Sans"`;
     ctx.strokeText(l.trim(), (width/2),50+(i*textHeight)+(i*margin*2), width-margin)
     ctx.fillText(l.trim(), (width/2),50+(i*textHeight)+(i*margin*2),width-margin)
   }
