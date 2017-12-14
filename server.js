@@ -9,6 +9,16 @@ const app = express();
 
 var drawPlz = require('./draw')
 
+const findVerb = verb => verbs.find(c=>( // maybe regex?
+                   c.kana==verb ||
+                   c.kanji==verb ||
+                   c.meaning.split(' ')[1]==verb ||
+                   c.masu.kana==verb ||
+                   c.masu.kanji==verb ||
+                   c.te.kana==verb ||
+                   c.te.kanji==verb
+                  )) || {plain:`${verb} not found`,kana:'sorry',meaning:'supports plain, english, masu and te',masu:{kana:'try again? 🙈'},te:{kana:'❤️ david'}} //redirect!
+
 //app.set('view engine', 'hbs');
 app.use(express.static('public'));
 //app.use(cookieParser());
@@ -35,16 +45,7 @@ app.get('/', (req, res) => {
 // specify verb
 
 app.get('/v/:verb', (req, res) => {
-  const verb =
-        verbs.find(c=>(
-                   c.kana==req.params.verb ||
-                   c.kanji==req.params.verb ||
-                   c.meaning.split(' ')[1]==req.params.verb ||
-                   c.masu.kana==req.params.verb ||
-                   c.masu.kanji==req.params.verb ||
-                   c.te.kana==req.params.verb ||
-                   c.te.kanji==req.params.verb
-                  )) || {plain:`${req.params.verb} not found`,kana:'sorry',meaning:'supports plain, english, masu and te',masu:{kana:'try again? 🙈'},te:{kana:'❤️ david'}} //redirect!
+  const verb = findVerb(req.params.verb)
   const { plain, kana, meaning, masu, te } = verb;
   let i = drawPlz([
     `${plain} (${kana})`,
