@@ -4,7 +4,6 @@ const Canvas = require('canvas').createCanvas
 const registerFont = require('canvas').registerFont
 const UPPER_LIMIT = 2000
 const DEFAULT_SIZE = 500
-const SPACER = 'て' // so we can approximate a character height
 
 registerFont('./font.otf', {family: 'Noto Sans'});
 
@@ -31,15 +30,16 @@ const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   ctx.fillRect(0, 0, img.width, img.height);
   
   ctx.font = `${textHeight}px "Noto Sans"`;
-  ctx.fillStyle = "black";
-  ctx.strokeStyle = "white";
-  ctx.strokeWidth = "2px";
+  ctx.fillStyle = "white";
+  ctx.strokeStyle = "black";
+  //ctx.lineWidth = "10px";
   ctx.textAlign = "center";
-  textToPrint.split('\n').forEach((l,i)=>
-    ctx.fillText(l.trim(), /*10, 50,*/(width/2)/*-(textWidth/2)+margin*/,50+(i*36)+(i*margin*2), width-margin)//100);
+  textToPrint.split('\n').forEach((l,i)=>{
+    ctx.strokeText(l.trim(), (width/2),50+(i*textHeight)+(i*margin*2), width-margin)
+    ctx.fillText(l.trim(), (width/2),50+(i*textHeight)+(i*margin*2),width-margin)
+  }
   )
   console.log(ctx.measureText(textToPrint).width)
-  console.log(ctx.measureText(SPACER).width)
   
   return canvas
 }
