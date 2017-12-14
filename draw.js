@@ -24,7 +24,7 @@ const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   var ctx = canvas.getContext('2d');
   
   const textWidth = ctx.measureText(textToPrint).width
-  const textHeight = 36 //we're using 36 below //ctx.measureText(SPACER).width
+  const textHeight = 36
 
   var g=ctx.createLinearGradient(img.width-10,0,0,img.height-10);
   g.addColorStop(0,"#dddd44");
@@ -38,13 +38,14 @@ const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   ctx.lineWidth = 4;
   ctx.lineJoin = "round";
   ctx.textAlign = "center";
-  textToPrint.split('\n').forEach((l,i)=>{
+  textToPrint.split('\n').forEach((l,i,a)=>{
     ctx.font = `${textHeight}px "${/[a-zA-Z]/.test(l)?'Balsamiq':'Noto'} Sans"`;
-    ctx.strokeText(l.trim(), (width/2),50+(i*textHeight)+(i*margin*2), width-margin)
-    ctx.fillText(l.trim(), (width/2),50+(i*textHeight)+(i*margin*2),width-margin)
+    //const yPosition = 50+(i*textHeight)+(i*margin*2)
+    const yPosition = (height/2)-((a.length/2)*textHeight)/*-((a.length/2)*margin*2)*/+(i*textHeight)+(i*margin*2)
+    ctx.strokeText(l.trim(), (width/2),yPosition, width-margin)
+    ctx.fillText(l.trim(), (width/2),yPosition,width-margin)
   }
   )
-  console.log(ctx.measureText(textToPrint).width)
   
   return canvas
 }
