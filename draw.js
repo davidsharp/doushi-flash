@@ -38,7 +38,7 @@ const drawPlz = (text='こんにちは',options={/*colour,width,height*/}) =>{
   ctx.lineWidth = 4;
   ctx.lineJoin = "round";
   ctx.textAlign = "center";
-  textToPrint.split('\n').forEach((l,i,a)=>{
+  textToPrint.split('\n').reduce((a,l)=>{if(ctx.measureText(l).width>=width-margin)l.split(', ').forEach((c,i,_a)=>{a.push(i<_a.length-1?c+',':c)});else a.push(l);return a;},[]).forEach((l,i,a)=>{
     ctx.font = `${textHeight}px "${/[a-zA-Z]/.test(l)?'Balsamiq':'Noto'} Sans"`;
     //const yPosition = 50+(i*textHeight)+(i*margin*2)
     const yPosition = (height/2)-((a.length/2)*textHeight)/*-((a.length/2)*margin*2)*/+(i*textHeight)+(i*margin*2)
