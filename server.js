@@ -29,12 +29,16 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
   const { plain, kana, meaning, masu, te } = pick(verbs);
   
+  const { width, height } = req.query
+  const kanji = req.query.kanji != undefined
+  console.log(req.query)
+  
   let i = drawPlz([
     `${plain} (${kana})`,
     `${meaning}`,
-    `${masu.kana}`,
-    `${te.kana}`
-  ]).toBuffer()
+    `${masu[kanji?'kanji':'kana']}`,
+    `${te[kanji?'kanji':'kana']}`
+  ],{width:parseInt(width),height:parseInt(height)}).toBuffer()
   res.writeHead(200, {
      'Content-Type': 'image/png',
      'Content-Length': i.length
@@ -53,6 +57,24 @@ app.get('/v/:verb', (req, res) => {
     `${masu.kana}`,
     `${te.kana}`
   ]).toBuffer()
+  res.writeHead(200, {
+     'Content-Type': 'image/png',
+     'Content-Length': i.length
+   });
+  res.end( i );
+});
+
+app.get('/v/:verb/:width/:height', (req, res) => {
+  const width = parseInt(req.params.width)
+  const height = parseInt(req.params.height)
+  const verb = findVerb(req.params.verb)
+  const { plain, kana, meaning, masu, te } = verb;
+  let i = drawPlz([
+    `${plain} (${kana})`,
+    `${meaning}`,
+    `${masu.kana}`,
+    `${te.kana}`
+  ],{width,height}).toBuffer()
   res.writeHead(200, {
      'Content-Type': 'image/png',
      'Content-Length': i.length
